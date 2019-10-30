@@ -7,38 +7,65 @@ namespace Assignment02MikaelAurell
     {
         static void Main(string[] args)
         {
-            
+
             string secretWord = CreateSecretWord();
+            
             Console.WriteLine($"{secretWord} \n");
-            Console.WriteLine("Type a guess: ");
-            string userGuess = Console.ReadLine();
+            int x = 1;
             List<char> charList = new List<char>();
             char charGuess;
-            
-            if (userGuess.Length == 1)
+            while (x < 21)
             {
-                if (charList.Count < 2)
+                char[] gameStatus = new char[secretWord.Length];
+                Console.Write("Your word contains of :");
+                for (int i = 0; i < secretWord.Length; i++)
                 {
-                    charGuess = userGuess[0];
-                    charList.Add(charGuess);
+
+                    gameStatus[i] = '_';
+                    Console.Write($"{gameStatus[i]}");
                 }
-                else
-                { 
-                    for (int i = 0; i < charList.Count; i++) //Finns bokstaven?
+                
+                Console.Write($" You have {21-x} guess left.  Type a guess: ");
+                string userGuess = Console.ReadLine();
+                x++;
+                
+                
+
+
+                if (userGuess.Length == 1)
+                {
+                    if (charList.Count < 2)
                     {
                         charGuess = userGuess[0];
-                        if (charList[i] == charGuess)
+                        charList.Add(charGuess);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < charList.Count; i++) //Finns bokstaven?
                         {
-                            Console.WriteLine("You have all ready typed that character");
-                        }
-                        else
-                        {
-                            charList.Add(charGuess);
+                            charGuess = userGuess[0];
+                            if (charList[i] == charGuess)
+                            {
+                                Console.WriteLine("You have allready typed that character");
+                            }
+                            else
+                            {
+                                charList.Add(charGuess);
 
+                            }
                         }
                     }
-                }
 
+                }
+                else
+                {
+                    if (secretWord.Equals(userGuess)==true)
+                    {
+                        Console.WriteLine("Congratulations you have typed the right answer!");
+                        x = 22;
+                    }
+
+                }
             }
         }
         /*static string CheckTheInput(string userGuess, string secretWord)
@@ -49,6 +76,8 @@ namespace Assignment02MikaelAurell
 
             }
         }*/
+
+        
 
         static string CreateSecretWord()
         {
@@ -79,48 +108,6 @@ namespace Assignment02MikaelAurell
 
         }
 
-        /* static int CompareArrays(char[] myCharArray,char[] qCharArray,string qString)
-         {
-
-             for (int i = 0; i < qString.Length; i++)
-             {
-                 int right = 0;
-                 if (myCharArray[i] == qCharArray[i])
-                 {
-                     char rightChar = qCharArray[i];
-                     right = 1;
-                     return right;
-                 }
-
-                 return right;
-
-             }
-         }*/
-
-        /*static List<char> makeCharList(string myString)
-        {
-            List<char> charList = new List<char>();
-            for (int i = 0; i < myString.Length; i++)
-            {
-               
-                charList.Add(char.Parse(myString.Substring(i, 1)));
-            }
-            return charList;
-        }
         
-         char[] myCharArray = new char[secretWord.Length];
-            myCharArray= secretWord.ToCharArray();
-            Console.WriteLine($"{secretWord}");
-            string userGuess = AskForWordOrChar();
-            if (userGuess.Length <2)
-                char 
-            char[] qCharArray = new char[qString.Length];
-            qCharArray = qString.ToCharArray();
-
-            bool equalwords = qCharArray.Equals(myCharArray);
-
-            Console.WriteLine($"{equalwords}");
-         
-         */
     }
 }
