@@ -9,57 +9,87 @@ namespace Assignment02MikaelAurell
         {
 
             string secretWord = CreateSecretWord();
-            
+            string secretWordData = secretWord.ToLower();
+            char[] secretWordArray = new char[secretWord.Length];
+            char[] secretWordArrayData = new char[secretWord.Length];
+            secretWordArray = secretWord.ToCharArray();
+            secretWordArrayData = secretWordData.ToCharArray();
+
             Console.WriteLine($"{secretWord} \n");
             int x = 1;
             List<char> charList = new List<char>();
             char charGuess;
+            char[] gameStatusBegin = new char[secretWord.Length];
+            char[] gameStatus = new char[secretWord.Length];
+            for (int i = 0; i < secretWord.Length; i++)
+            {
+
+                gameStatusBegin[i] = '_';
+                gameStatus[i] = '_';
+                
+            }
+            foreach (char item in charList)
+            {
+                Console.WriteLine($"{charList}");
+            }
             while (x < 21)
             {
-                char[] gameStatus = new char[secretWord.Length];
+                foreach (char listofWrongChar in charList)
+                {
+                    Console.Write(listofWrongChar);
+                }
+
                 Console.Write("Your word contains of :");
                 for (int i = 0; i < secretWord.Length; i++)
                 {
 
-                    gameStatus[i] = '_';
-                    Console.Write($"{gameStatus[i]}");
+                    gameStatusBegin[i] = gameStatus[i];
+
+                    Console.Write($"{gameStatusBegin[i]}");
                 }
                 
                 Console.Write($" You have {21-x} guess left.  Type a guess: ");
                 string userGuess = Console.ReadLine();
                 x++;
-                
-                
 
-
-                if (userGuess.Length == 1)
+                if (userGuess.Length == 1) //Är det ett tecken?
                 {
-                    if (charList.Count < 2)
+                    for (int y = 0; y < secretWord.Length; y++) //Finns bokstaven i ordet?
                     {
-                        charGuess = userGuess[0];
-                        charList.Add(charGuess);
-                    }
-                    else
-                    {
-                        for (int i = 0; i < charList.Count; i++) //Finns bokstaven?
+                        if (secretWordArrayData[y] == userGuess[0])
                         {
-                            charGuess = userGuess[0];
-                            if (charList[i] == charGuess)
+                            gameStatus[y] = secretWordArray[y];
+                        }
+                        else
+                        {
+                            if (charList.Count < 2) //Är Listan tom?
                             {
-                                Console.WriteLine("You have allready typed that character");
+                                charList.Add(userGuess[0]);
                             }
                             else
-                            {
-                                charList.Add(charGuess);
+                            { 
+                                for (int i = 0; i < charList.Count; i++)
+                                {
 
+                                    if (charList[i] == userGuess[0]) //Finns bokstaven i den felaktiga listan?
+                                    {
+                                        Console.WriteLine("You have allready typed that character");
+                                       
+                            
+                                    }
+                                    else
+                                    {
+                                        charList.Add(userGuess[0]); //Lägg till bokstaven
+                                        y = charList.Count;
+                                    }
+                                }
                             }
                         }
                     }
-
                 }
                 else
                 {
-                    if (secretWord.Equals(userGuess)==true)
+                    if (secretWord.Equals(userGuess) == true)
                     {
                         Console.WriteLine("Congratulations you have typed the right answer!");
                         x = 22;
