@@ -54,39 +54,33 @@ namespace Assignment02MikaelAurell
 
                 if (userGuess.Length == 1) //Är det ett tecken?
                 {
-                    for (int y = 0; y < secretWord.Length; y++) //Finns bokstaven i ordet?
+                    int y = 0;
+                    while (y < secretWord.Length) //Finns bokstaven i ordet?
                     {
                         if (secretWordArrayData[y] == userGuess[0])
                         {
                             gameStatus[y] = secretWordArray[y];
+                            break;
                         }
                         else
                         {
-                            if (charList.Count < 2) //Är Listan tom?
-                            {
-                                charList.Add(userGuess[0]);
-                            }
-                            else
-                            { 
-                                for (int i = 0; i < charList.Count; i++)
-                                {
+                              int i = 0;
+                              while (i < charList.Count)
+                              {
 
-                                    if (charList[i] == userGuess[0]) //Finns bokstaven i den felaktiga listan?
-                                    {
-                                        Console.WriteLine("You have allready typed that character");
-                                       
-                            
+                                  if (charList[i] == userGuess[0]) //Finns bokstaven i den felaktiga listan?
+                                  {
+                                      Console.WriteLine("You have already typed that character!");
+                                      break;
+
                                     }
-                                    else
-                                    {
-                                        charList.Add(userGuess[0]); //Lägg till bokstaven
-                                        y = charList.Count;
-                                    }
+                                i++;                                
                                 }
-                            }
-                        }
-                    }
+                            charList.Add(userGuess[0]); //Lägg till bokstaven           
+                        }                      
+                    }y++;
                 }
+                
                 else
                 {
                     if (secretWord.Equals(userGuess) == true)
