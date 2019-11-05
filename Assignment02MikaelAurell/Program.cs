@@ -19,7 +19,7 @@ namespace Assignment02MikaelAurell
             Console.WriteLine($"{secretWord} \n");
             int guessLeft = 1;
             List<char> charList = new List<char>();
-            
+
             char[] gameStatusBegin = new char[secretWord.Length];
             char[] gameStatus = new char[secretWord.Length];
             StringBuilder wrongWordList = new StringBuilder();
@@ -31,7 +31,7 @@ namespace Assignment02MikaelAurell
                 gameStatus[i] = '_';
 
             }
-           // foreach (char item in charList)
+            // foreach (char item in charList)
             //{
             //    Console.WriteLine($"{charList}");
             //}
@@ -39,7 +39,7 @@ namespace Assignment02MikaelAurell
             {
                 //foreach (char listofWrongChar in charList)
                 //{
-                  //  Console.Write(listofWrongChar);
+                //  Console.Write(listofWrongChar);
                 //}
 
                 Console.Write("Your word contains of :");
@@ -51,7 +51,7 @@ namespace Assignment02MikaelAurell
 
                 Console.Write("The list of wrong word is :");
                 for (int i = 0; i < wrongWordList.Length; i++)
-                {                   
+                {
                     Console.Write($"{wrongWordList[i]}, ");
                 }
 
@@ -60,79 +60,96 @@ namespace Assignment02MikaelAurell
                 guessLeft++;
                 string userGuessToLower = userGuess.ToLower();
                 string userGuessToUpper = userGuess.ToUpper();
-                char userGuessChar = isUserGuessChar(userGuessToLower,secretWord);
-                bool aWrongCharacter=false;
+                
+                
+                
+                char userGuessChar = isUserGuessChar(userGuessToLower, secretWord);
 
-                if (userGuessChar != '0') //Om secretword är ett tecken
+
+
+
+
+                if (userGuess.Length == 1)
                 {
-                    for (int i = 0; i < secretWord.Length; i++)
+                    bool charExists = CheckifCharExists(gameStatus, userGuessToUpper, userGuessToLower, userGuessChar, guessLeft);
+                    if (charExists)
                     {
-                        if (gameStatus[i] == userGuessToLower[0])//Om tecknet inte redan finns
-                        {
-                            Console.WriteLine($"You have alredy typed the letter {userGuessChar}, please try again.");
-                            i = secretWord.Length;
-                            guessLeft--;
-                        }
-                        else if (gameStatus[i] == userGuessToUpper[0])
-                        {
-                            Console.WriteLine($"You have alredy typed the letter {userGuessChar}, please try again.");
-                            i = secretWord.Length;
-                            guessLeft--;
-                        }
+                        guessLeft--;
                     }
-                
-                
-                   
-                }
-                // Append to StringBuilder.
+                    else
+                    {
+                        if (wrongWordList.Length==0)
+                            wrongWordList.Append(userGuessToLower[0]);
+                        else
+                            for (int i = 0; i < wrongWordList.Length; i++)
+                            {
+                                if (wrongWordList[i] != userGuessToLower[0])
+                                {
+                                    wrongWordList.Append(userGuessToLower[0]);
+                                }
+                                else
+                                {
+                                    gameStatus = SetGameStatus(secretWordArrayData, userGuessChar, secretWord, gameStatus, secretWordArray);
+                                }
+                            }
 
-                if (wrongWordList.Length == 0)
-                {
-                    wrongWordList.Append(userGuessToLower[0]);
+                    }
                 }
                 else
                 {
-                    for (int i = 0; i < wrongWordList.Length; i++)
+                    if (secretWord.Equals(userGuessToLower))
                     {
-                        if (wrongWordList[i] != userGuessToLower[0])
-                        {
-                            wrongWordList.Append(userGuessToLower[0]);
-                            aWrongCharacter=true;
-                        }
-
-                    }
-
-                }
-                
-                
-                if (aWrongCharacter != true)
-                for (int y = 0; y < secretWord.Length; y++) //kanske på fel plats
-                {
-                    if (secretWordArrayData[y] == userGuessChar)
-                    {
-                        gameStatus[y] = secretWordArray[y];
+                        Console.WriteLine("Congratulations you have typed the right answer!");
                     }
                 }
-                aWrongCharacter = false; //fel 
-            } 
+                
+            }
         }
 
         static char isUserGuessChar(string userGuessToLower, string secretWord)
         {
             if (userGuessToLower.Length == 1)
             {
-               
+
                 char guessIsChar = userGuessToLower[0];
                 return guessIsChar;
             }
             else
                 if (secretWord.Equals(userGuessToLower) == true)
                 Console.WriteLine("Congratulations you have typed the right answer!");
-                return '0';            
+            return '0';
         }
-
-
-
+        static bool CheckifCharExists(char[] gameStatus, string userGuessToUpper, string userGuessToLower, char userGuessChar, int guessLeft)
+            {
+            bool charExists = false;
+            for (int i = 0; i < gameStatus.Length; i++)
+                {                                                      
+                    if (gameStatus[i] == userGuessToLower[0])
+                    {
+                        Console.WriteLine($"You have alredy typed the letter {userGuessChar}, please try again.");
+                        charExists = true;
+                    }
+                    else if (gameStatus[i] == userGuessToUpper[0])
+                    {
+                        Console.WriteLine($"You have alredy typed the letter {userGuessChar}, please try again.");                               
+                        charExists=true;
+                    }
+                }
+                return charExists;
+            }
+        
+        static char[] SetGameStatus(char[] secretWordArrayData, char userGuessChar, string secretWord, char[] gameStatus, char[] secretWordArray)
+        {
+            for (int y = 0; y < secretWord.Length; y++)
+            {
+                if (secretWordArrayData[y] == userGuessChar)
+                {
+                    gameStatus[y] = secretWordArray[y];
+                        
+                }                                     
+            }
+            return gameStatus;
+        }
         static string CreateSecretWord()
         {
             string[] dataString = new string[10];
@@ -166,3 +183,12 @@ namespace Assignment02MikaelAurell
 
 }
 
+                
+
+                
+                   
+
+
+
+                
+                            
