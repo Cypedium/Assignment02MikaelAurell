@@ -67,9 +67,10 @@ namespace Assignment02MikaelAurell
 
 
 
+                var gameStatusUppdate = SetGameStatus(secretWordArrayData, userGuessChar, secretWord, gameStatus, secretWordArray);
 
-
-                if (userGuess.Length == 1)
+                if (userGuess.Length == 1 )
+                    
                 {
                     bool charExists = CheckifCharExists(gameStatus, userGuessToUpper, userGuessToLower, userGuessChar, guessLeft);
                     if (charExists)
@@ -78,21 +79,25 @@ namespace Assignment02MikaelAurell
                     }
                     else
                     {
-                        if (wrongWordList.Length==0)
-                            wrongWordList.Append(userGuessToLower[0]);
+                    var gameStatusUppdate = SetGameStatus(secretWordArrayData, userGuessChar, secretWord, gameStatus, secretWordArray);
+                        if (wrongWordList.Length == 0)
+                        {
+                            if (gameStatusUppdate.Item1)
+                            {
+                                wrongWordList.Append(userGuessToLower[0]);
+                            }
+                        }
                         else
+                        {
                             for (int i = 0; i < wrongWordList.Length; i++)
                             {
                                 if (wrongWordList[i] != userGuessToLower[0])
                                 {
                                     wrongWordList.Append(userGuessToLower[0]);
                                 }
-                                else
-                                {
-                                    gameStatus = SetGameStatus(secretWordArrayData, userGuessChar, secretWord, gameStatus, secretWordArray);
-                                }
                             }
-
+                        }                                                               
+                                                   
                     }
                 }
                 else
@@ -103,7 +108,9 @@ namespace Assignment02MikaelAurell
                     }
                 }
                 
+
             }
+           
         }
 
         static char isUserGuessChar(string userGuessToLower, string secretWord)
@@ -138,17 +145,19 @@ namespace Assignment02MikaelAurell
                 return charExists;
             }
         
-        static char[] SetGameStatus(char[] secretWordArrayData, char userGuessChar, string secretWord, char[] gameStatus, char[] secretWordArray)
+        static (bool, char[]) SetGameStatus(char[] secretWordArrayData, char userGuessChar, string secretWord, char[] gameStatus, char[] secretWordArray)
         {
+            bool isGuessCorrect = false;
             for (int y = 0; y < secretWord.Length; y++)
             {
                 if (secretWordArrayData[y] == userGuessChar)
                 {
                     gameStatus[y] = secretWordArray[y];
+                    isGuessCorrect = true;
                         
                 }                                     
             }
-            return gameStatus;
+            return (isGuessCorrect, gameStatus);
         }
         static string CreateSecretWord()
         {
