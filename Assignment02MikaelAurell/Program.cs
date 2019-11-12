@@ -22,6 +22,9 @@ namespace Assignment02MikaelAurell
 
             while (newGame)
             {
+
+
+
                 newGame = false;
                 Console.WriteLine($"{secretWord} \n");
                 int guessLeft = 1;
@@ -58,12 +61,13 @@ namespace Assignment02MikaelAurell
                     }
 
                     Console.Write($"You have {21 - guessLeft} guess left. Type a guess: ");
-                    string userGuess = Console.ReadLine();                   
+                    string userGuess = Console.ReadLine();
                     string userGuessToLower = userGuess.ToLower();
                     string userGuessToUpper = userGuess.ToUpper();
                     guessLeft++;
 
                     char userGuessChar = isUserGuessChar(userGuessToLower, secretWord);
+
 
                     if (userGuess.Length == 1)
 
@@ -90,9 +94,9 @@ namespace Assignment02MikaelAurell
                             {
                                 if (wrongWordList.Length > 0)
                                 {
-                                    
+
                                     bool charInWrongWordListExists = false;
-                                    for (int i = 0; i < wrongWordList.Length; i++)                                        
+                                    for (int i = 0; i < wrongWordList.Length; i++)
                                     {
                                         if (wrongWordList[i] == userGuessChar)
                                         {
@@ -106,17 +110,17 @@ namespace Assignment02MikaelAurell
                                         }
                                     }
                                     if (!charInWrongWordListExists)
-                                        {
-                                            wrongWordList.Append(userGuessChar);
-                                            charInWrongWordListExists = false;
-                                        }                                                                               
+                                    {
+                                        wrongWordList.Append(userGuessChar);
+                                        charInWrongWordListExists = false;
+                                    }
                                 }
                                 else
                                 {   //This happends the first time
                                     wrongWordList.Append(userGuessChar);
                                 }
                             }
-                            
+
                         }
                     }
                     else
@@ -127,21 +131,34 @@ namespace Assignment02MikaelAurell
                         }
                     }
                 }//Game while loop exits
-                    
-                if (guessLeft==0 && !CheckGamestatusForWinner(gameStatus, guessLeft))
+
+                if (guessLeft == 0 && !CheckGamestatusForWinner(gameStatus, guessLeft))
                 {
-                     Console.WriteLine($"I'm sorry dude, you loose! Please try again.");
+                    Console.WriteLine($"I'm sorry dude, you loose! Please try again.");
                 }
                 else
                 {
                     Console.WriteLine("Congratulations you have typed the right answer!");
 
                 }
-            guessLeft = 21;
-            wrongWordList.Clear();
-            newGame = true;
+                guessLeft = 21;
+                wrongWordList.Clear();
+                newGame = true;
             }
-        }       
+                 //catch (ArgumentNullException)// not likly to happen
+                // {
+                //Console.WriteLine("Nothing was given.");
+        }
+                //catch (FormatException)
+                 // {
+                // Console.WriteLine("Not a letter");
+    
+               //  catch (OverflowException)
+               // {
+                 //   Console.WriteLine("The number was too big.");
+                //}
+            
+       
        
 
         static bool CheckGamestatusForWinner(char[] gameStatus, int guessLeft)
