@@ -34,16 +34,10 @@ namespace Assignment02MikaelAurell
                 gameStatus[i] = '_';
 
             }
-            // foreach (char item in charList)
-            //{
-            //    Console.WriteLine($"{charList}");
-            //}
+           
             while (guessLeft < 21)
             {
-                //foreach (char listofWrongChar in charList)
-                //{
-                //  Console.Write(listofWrongChar);
-                //}
+                
 
                 Console.Write("Your word contains of :");
                 for (int i = 0; i < secretWord.Length; i++)
@@ -52,7 +46,7 @@ namespace Assignment02MikaelAurell
                     Console.Write($"{gameStatusBegin[i]}");
                 }
 
-                Console.Write("The list of wrong word is :");
+                Console.Write("The list of wrong word is : ");
                 for (int i = 0; i < wrongWordList.Length; i++)
                 {
                     Console.Write($"{wrongWordList[i]}, ");
@@ -63,18 +57,12 @@ namespace Assignment02MikaelAurell
                 guessLeft++;
                 string userGuessToLower = userGuess.ToLower();
                 string userGuessToUpper = userGuess.ToUpper();
-                
-                
-                
+                           
                 char userGuessChar = isUserGuessChar(userGuessToLower, secretWord);
-
-
-
-                //var gameStatusUppdate = SetGameStatus(secretWordArrayData, userGuessChar, secretWord, gameStatus, secretWordArray);
 
                 if (userGuess.Length == 1)
                     
-            {       // Checks if char exists in gamestatus -----                                     
+                {   // Checks if char exists in gamestatus -----                                     
                     bool charExists = CheckifCharExists(gameStatus, userGuessToUpper, userGuessToLower, userGuessChar, guessLeft);
                     if (charExists)
                     {
@@ -82,7 +70,7 @@ namespace Assignment02MikaelAurell
                         guessLeft--;
                     }
                     else
-                    {// Checks if char exists in secret word
+                    {   // Checks if char exists in secret word
                         bool isGuessCorrect = false;
                         for (int y = 0; y < secretWord.Length; y++)
                         {
@@ -93,26 +81,43 @@ namespace Assignment02MikaelAurell
                                 isGuessCorrect = true;
                             }
                         }//Adds the wrong word to a list
-                        for (int i = 0; i < wrongWordList.Length; i++)//första gången är wrongwordlist mindre än i.
+                        if (!isGuessCorrect)
                         {
-                            if (wrongWordList[i] != userGuessToLower[0] && isGuessCorrect==false)
+                            if (wrongWordList.Length > 0)
                             {
+                                for (int i = 0; i < wrongWordList.Length; i++)
                                 {
-                                 wrongWordList.Append(userGuessToLower[0]);
-                                }
+                                    if (wrongWordList[i] != userGuessToLower[0] && isGuessCorrect==false)
+                                    {
+                                        {
+                                         wrongWordList.Append(userGuessToLower[0]);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.Write($"The char {userGuessChar} have you already tried to guess. Please try again:\n");
+                                        guessLeft--;
+                                    }
+                                }                       
                             }
-                        }                       
+                            else
+                            {   //This happends the first time
+                                wrongWordList.Append(userGuessToLower[0]);
+                            }
+                        }
+                        else
+                        {
+                            ;
+                        }
                     }
                 }
                 else
-                {
+                {   //If the user guess is a word and not a char.
                     if (secretWord.Equals(userGuessToLower))
                     {
                         Console.WriteLine("Congratulations you have typed the right answer!");
                     }
                 }
-                
-
             }
            
         }
