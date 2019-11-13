@@ -23,7 +23,7 @@ namespace Assignment02MikaelAurell
             while (newGame)
             {
                 newGame = false;
-                Console.WriteLine($"{secretWord} \n");
+                //Console.WriteLine($"{secretWord} \n");
                 int guessLeft = 1;
                 List<char> charList = new List<char>();
                 
@@ -132,10 +132,7 @@ namespace Assignment02MikaelAurell
                             }
                         }
                     }
-                    catch (ArgumentNullException)
-                    {
-                        Console.WriteLine("Nothing was given.");
-                    }
+                    
                     catch (FormatException)
                     {
                         Console.WriteLine("No number excepted");
@@ -144,17 +141,29 @@ namespace Assignment02MikaelAurell
                     {
                         Console.WriteLine("The word can't be more than 50 chars");
                     }
+                    catch (ArgumentNullException)
+                    {
+                        Console.WriteLine("Nothing was given.");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("A exception has occurred!\nIt can be that you inputed somthing other then a number in the menu or the assigment you were running has a flaw");
+                        Console.WriteLine(e);
+                    }
                 }//Game while loop exits
-                if (guessLeft == 0 && !CheckGamestatusForWinner(gameStatus, guessLeft))
+                if (guessLeft == 11) //Räknar upp till 11 i min kod
                 {
                     Console.WriteLine($"I'm sorry dude, you loose! Please try again.");
                 }
                 else
                 {
-                    Console.WriteLine("Congratulations you have typed the right answer!");
-
+                    if (guessLeft > 0 && guessLeft < 11 && CheckGamestatusForWinner(gameStatus, guessLeft))
+                    {
+                    Console.WriteLine("Congratulations you have typed the right answer! Let's play again.\n");
+                    }
                 }
-                guessLeft = 21;
+                guessLeft = 11;
                 wrongWordList.Clear();
                 newGame = true;
             }
@@ -164,9 +173,7 @@ namespace Assignment02MikaelAurell
         {
             char charGuess = isUserGuessChar(userGuess.ToLower(), secretWord);
             List<char> numbers = new List<char>() { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-                
-            if (userGuess.Length < 50)
-            {
+ 
                 for (int i = 0; i < numbers.Count; i++)
                 {
                     if (charGuess==numbers[i])
@@ -174,14 +181,8 @@ namespace Assignment02MikaelAurell
                         throw new FormatException();
                     }
                 }
-            }
-                                                          
-            else if (userGuess.Length > 50)
-            {
-                throw new OverflowException();
-            }
-
-            else if (userGuess == "")
+                            
+            if (userGuess == "")
             {
                 throw new ArgumentNullException();
             }
