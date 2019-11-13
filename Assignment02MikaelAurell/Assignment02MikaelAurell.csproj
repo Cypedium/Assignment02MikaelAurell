@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="InfoGenerator">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\InfoGenerator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
